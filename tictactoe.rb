@@ -1,3 +1,4 @@
+
 # define class boardSquare
 class BoardSquare
 	def initialize(squareState, name)
@@ -23,16 +24,16 @@ class BoardSquare
 end
 end
 #define method for drawing game board
-def drawBoard(firstRow, secondRow, thirdRow)
-	firstRow.each do |i|
+def drawBoard
+	$firstRow.each do |i|
 		i.printState
 	end
 	newLine
-	secondRow.each do |i|
+	$secondRow.each do |i|
 		i.printState
 	end
 	newLine
-	thirdRow.each do |i|
+	$thirdRow.each do |i|
 		i.printState
 	end
 	newLine
@@ -56,39 +57,42 @@ c3 = BoardSquare.new('---', 'c3')
 
 
 #group the squares into arrays
-firstRow = [a1, a2, a3]
-secondRow = [b1, b2, b3]
-thirdRow = [c1, c2, c3]
+$firstRow = [a1, a2, a3]
+$secondRow = [b1, b2, b3]
+$thirdRow = [c1, c2, c3]
 
-winConditions = [[a1, a2, a3], [b1, b2, b3], [c1, c2, c3], [a1, b1, c1], [a2, b2, c2], [a3, b3, c3], [a1, b2, c3], [a3, b2, c1]]
+$winConditions = [[a1, a2, a3], [b1, b2, b3], [c1, c2, c3], [a1, b1, c1], [a2, b2, c2], [a3, b3, c3], [a1, b2, c3], [a3, b2, c1]]
 
-board = [firstRow, secondRow, thirdRow]
+$board = [$firstRow, $secondRow, $thirdRow]
+$turnNum = 0
 
-def takeTurn(turnNum, board)
-	if turnNum % 2 == 0
+def takeTurn
+	if $turnNum % 2 == 0
 		puts 'Player 1, what is your move?'
 		newLine
 		input = gets.chomp
-		board.each do |i|
+		$board.each do |i|
 			i.each do |k|
 				k.getSquare(input, ' X ')
 			end
 		end
+		$turnNum += 1
 	else
 		puts 'Player 2, what is your move?'
 		newLine
 		input = gets.chomp
-		board.each do |i|
+		$board.each do |i|
 			i.each do |k|
 				k.getSquare(input, ' O ')
 			end
 		end
+		$turnNum += 1
 	end
 end
 
-def hasWon(winConditions)
+def hasWon
 
-	winConditions.each do |i|
+	$winConditions.each do |i|
 		if i[0].returnState == ' X ' && i[1].returnState == ' X ' && i[2].returnState == ' X '
 			puts 'Player 1 wins!'
 			newLine
@@ -104,62 +108,87 @@ def hasWon(winConditions)
 
 end
 
+def aiMove(board)
+	board.each do |i|
+		#Step 1: If you have two in a row, take the third
+		if i[0].returnState == ' O ' && i[1].returnState == ' O '
+			i[2].changeState(' O ') 
+		elsif i[1].returnState == ' O ' && i[2].returnState == ' O '
+			i[0].changeState(' O ')
+		elsif i[0].returnState == ' O ' && i[2].returnState == ' O '
+			i[1].changeState(' O ')
+		#Step 2: If your opponent has two in a row, block the third
+		if i[0].returnState == ' X ' && i[1].returnState == ' X '
+			i[2].changeState(' O ') 
+		elsif i[1].returnState == ' X ' && i[2].returnState == ' X '
+			i[0].changeState(' O ')
+		elsif i[0].returnState == ' X ' && i[2].returnState == ' X '
+			i[1].changeState(' O ')
+		#Step 3: Check if center is occupied
+		end
+	end
+	end
+end
+
+
+
 newLine
 
 
-drawBoard(firstRow, secondRow, thirdRow)
+drawBoard
 
 
 newLine
 newLine
 
-takeTurn(0, board)
+takeTurn
 newLine
-drawBoard(firstRow, secondRow, thirdRow)
-newLine
-
-takeTurn(1, board)
-newLine
-drawBoard(firstRow, secondRow, thirdRow)
+drawBoard
 newLine
 
-takeTurn(2, board)
+takeTurn
 newLine
-drawBoard(firstRow, secondRow, thirdRow)
-newLine
-
-takeTurn(3, board)
-newLine
-drawBoard(firstRow, secondRow, thirdRow)
+drawBoard
 newLine
 
-takeTurn(4, board)
+takeTurn
 newLine
-drawBoard(firstRow, secondRow, thirdRow)
-hasWon(winConditions)
-newLine
-
-takeTurn(5, board)
-newLine
-drawBoard(firstRow, secondRow, thirdRow)
-hasWon(winConditions)
+drawBoard
 newLine
 
-takeTurn(6, board)
+takeTurn
 newLine
-drawBoard(firstRow, secondRow, thirdRow)
-hasWon(winConditions)
-newLine
-
-takeTurn(7, board)
-newLine
-drawBoard(firstRow, secondRow, thirdRow)
-hasWon(winConditions)
+drawBoard
 newLine
 
-takeTurn(8, board)
+takeTurn
 newLine
-drawBoard(firstRow, secondRow, thirdRow)
-hasWon(winConditions)
+drawBoard
+hasWon
 newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+newLine
+puts "It's a draw!"
 
