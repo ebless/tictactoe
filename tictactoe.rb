@@ -19,7 +19,7 @@ class BoardSquare
 	end
 end
 end
-
+#define method for drawing game board
 def drawBoard(firstRow, secondRow, thirdRow)
 	firstRow.each do |i|
 		i.printState
@@ -38,7 +38,7 @@ def newLine
 	puts ''
 end
 
-
+#create each square as an instance of the BoardSquare class
 a1 = BoardSquare.new('---', 'a1')
 a2 = BoardSquare.new('---', 'a2')
 a3 = BoardSquare.new('---', 'a3')
@@ -50,7 +50,7 @@ c2 = BoardSquare.new('---', 'c2')
 c3 = BoardSquare.new('---', 'c3')
 
 
-
+#group the squares into arrays
 firstRow = [a1, a2, a3]
 secondRow = [b1, b2, b3]
 thirdRow = [c1, c2, c3]
@@ -67,6 +67,7 @@ newLine
 puts 'Player 1, what is your move? (enter square name)'
 input = gets.chomp
 
+#loop through each square and call method getSquare
 board.each do |i|
 	i.each do |k|
 		k.getSquare(input, ' X ')
