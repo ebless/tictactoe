@@ -61,7 +61,12 @@ $firstRow = [a1, a2, a3]
 $secondRow = [b1, b2, b3]
 $thirdRow = [c1, c2, c3]
 
+$fourCorners = [a1, c1, a3, c3]
+$fourSides = [a2, b3, c2, b1]
+
 $winConditions = [[a1, a2, a3], [b1, b2, b3], [c1, c2, c3], [a1, b1, c1], [a2, b2, c2], [a3, b3, c3], [a1, b2, c3], [a3, b2, c1]]
+
+
 
 $board = [$firstRow, $secondRow, $thirdRow]
 $turnNum = 0
@@ -108,25 +113,51 @@ def hasWon
 
 end
 
-def aiMove(board)
-	board.each do |i|
+def aiMove
+	$board.each do |i|
 		#Step 1: If you have two in a row, take the third
 		if i[0].returnState == ' O ' && i[1].returnState == ' O '
-			i[2].changeState(' O ') 
+			i[2].changeState(' O ')
+			$turnNum += 1 
 		elsif i[1].returnState == ' O ' && i[2].returnState == ' O '
 			i[0].changeState(' O ')
+			$turnNum += 1 
 		elsif i[0].returnState == ' O ' && i[2].returnState == ' O '
 			i[1].changeState(' O ')
+			$turnNum += 1 
 		#Step 2: If your opponent has two in a row, block the third
-		if i[0].returnState == ' X ' && i[1].returnState == ' X '
+		elsif i[0].returnState == ' X ' && i[1].returnState == ' X '
 			i[2].changeState(' O ') 
+			$turnNum += 1 
 		elsif i[1].returnState == ' X ' && i[2].returnState == ' X '
 			i[0].changeState(' O ')
+			$turnNum += 1 
 		elsif i[0].returnState == ' X ' && i[2].returnState == ' X '
 			i[1].changeState(' O ')
-		#Step 3: Check if center is occupied
+			$turnNum += 1 
+		
 		end
 	end
+	#Step 3: Check if center is occupied
+	if $secondRow[1].returnState == '---'
+		$secondRow[1].changeState(' O ')
+		$turnNum += 1 
+		return 0
+	end
+	#Step 4: Go in an empty corner
+	$fourCorners.each do |i|
+		if i.returnState == '---'
+			i.changeState(' O ')
+			$turnNum += 1 
+			break
+		end
+	end
+	$fourSides.each do |i|
+		if i.returnState == '---'
+			i.changeState(' O ')
+			$turnNum += 1 
+			break
+		end
 	end
 end
 
@@ -145,7 +176,15 @@ takeTurn
 newLine
 drawBoard
 newLine
+aiMove
+drawBoard
 
+takeTurn
+newLine
+drawBoard
+newLine
+aiMove
+drawBoard
 takeTurn
 newLine
 drawBoard
@@ -155,17 +194,15 @@ takeTurn
 newLine
 drawBoard
 newLine
+aiMove
+drawBoard
 
 takeTurn
 newLine
 drawBoard
 newLine
-
-takeTurn
-newLine
+aiMove
 drawBoard
-hasWon
-newLine
 
 takeTurn
 newLine
