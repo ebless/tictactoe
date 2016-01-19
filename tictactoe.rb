@@ -179,85 +179,14 @@ drawBoard
 newLine
 newLine
 
-takeTurn
-newLine
-drawBoard
-hasWon
-takeTurn
-drawBoard
-hasWon
-newLine
 
-takeTurn
-newLine
-drawBoard
-hasWon
-takeTurn
-drawBoard
-hasWon
-newLine
-
-takeTurn
-newLine
-drawBoard
-hasWon
-takeTurn
-drawBoard
-hasWon
-newLine
-
-takeTurn
-newLine
-drawBoard
-hasWon
-takeTurn
-drawBoard
-hasWon
-newLine
-
-takeTurn
-newLine
-drawBoard
-hasWon
-takeTurn
-drawBoard
-hasWon
-newLine
-
-takeTurn
-newLine
-drawBoard
-hasWon
-takeTurn
-drawBoard
-hasWon
-newLine
-
-takeTurn
-newLine
-drawBoard
-hasWon
-takeTurn
-drawBoard
-hasWon
-newLine
-
-takeTurn
-newLine
-drawBoard
-hasWon
-takeTurn
-drawBoard
-hasWon
-newLine
-
-takeTurn
-newLine
-drawBoard
-hasWon
-takeTurn
-drawBoard
-hasWon
-newLine
+until $turnNum > 8
+    takeTurn
+    newLine
+    drawBoard
+    hasWon
+    newLine
+end until $turnNum > 8
 puts "It's a draw!"
+
 
