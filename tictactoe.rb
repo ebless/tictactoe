@@ -16,11 +16,17 @@ class BoardSquare
 		print @squareState + '   '
 	end
 	def getSquare(input, player)
-	if input == @name && player == ' X '
-		changeState(player)
-	elsif input == @name && player == ' O '
-		changeState(player)
-	end
+        if @squareState != '---'
+            puts ''
+            puts "Oops! You can't make that move!"
+            puts ''
+            
+            return 1
+        elsif input == @name && player == ' X ' && @squareState
+            changeState(player)
+        elsif input == @name && player == ' O ' && @squareState == '---'
+            changeState(player)
+        end
 end
 end
 #define method for drawing game board
@@ -79,7 +85,7 @@ def takeTurn
 		$board.each do |i|
 			i.each do |k|
 				k.getSquare(input, ' X ')
-			end
+            end
 		end
 		$turnNum += 1
 	else
@@ -149,14 +155,15 @@ def aiMove
 		if i.returnState == '---'
 			i.changeState(' O ')
 			$turnNum += 1 
-			break
+			return 0
 		end
 	end
+    #Step 5: Go in an empty side
 	$fourSides.each do |i|
 		if i.returnState == '---'
 			i.changeState(' O ')
 			$turnNum += 1 
-			break
+			return 0
 		end
 	end
 end
@@ -175,37 +182,8 @@ newLine
 takeTurn
 newLine
 drawBoard
-newLine
-aiMove
-drawBoard
-
+hasWon
 takeTurn
-newLine
-drawBoard
-newLine
-aiMove
-drawBoard
-takeTurn
-newLine
-drawBoard
-newLine
-
-takeTurn
-newLine
-drawBoard
-newLine
-aiMove
-drawBoard
-
-takeTurn
-newLine
-drawBoard
-newLine
-aiMove
-drawBoard
-
-takeTurn
-newLine
 drawBoard
 hasWon
 newLine
@@ -214,16 +192,70 @@ takeTurn
 newLine
 drawBoard
 hasWon
-newLine
-
 takeTurn
-newLine
 drawBoard
 hasWon
 newLine
 
 takeTurn
 newLine
+drawBoard
+hasWon
+takeTurn
+drawBoard
+hasWon
+newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+takeTurn
+drawBoard
+hasWon
+newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+takeTurn
+drawBoard
+hasWon
+newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+takeTurn
+drawBoard
+hasWon
+newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+takeTurn
+drawBoard
+hasWon
+newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+takeTurn
+drawBoard
+hasWon
+newLine
+
+takeTurn
+newLine
+drawBoard
+hasWon
+takeTurn
 drawBoard
 hasWon
 newLine
