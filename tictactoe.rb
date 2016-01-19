@@ -16,13 +16,7 @@ class BoardSquare
 		print @squareState + '   '
 	end
 	def getSquare(input, player)
-        if @squareState != '---'
-            puts ''
-            puts "Oops! You can't make that move!"
-            puts ''
-            
-            return 1
-        elsif input == @name && player == ' X ' && @squareState
+        if input == @name && player == ' X ' && @squareState
             changeState(player)
         elsif input == @name && player == ' O ' && @squareState == '---'
             changeState(player)
@@ -77,25 +71,21 @@ $turnNum = 0
 def takeTurn
 	if $turnNum % 2 == 0
 		puts 'Player 1, what is your move?'
-		newLine
-		input = gets.chomp
-		$board.each do |i|
-			i.each do |k|
-				k.getSquare(input, ' X ')
+    else
+        puts 'Player 2, what is your move?'
+    end
+    newLine
+    input = gets.chomp
+    $board.each do |i|
+        i.each do |k|
+            if $turnNum % 2 == 0
+                k.getSquare(input, ' X ')
+            else
+                k.getSquare(input, ' O ')
             end
-		end
-		$turnNum += 1
-	else
-		puts 'Player 2, what is your move?'
-		newLine
-		input = gets.chomp
-		$board.each do |i|
-			i.each do |k|
-				k.getSquare(input, ' O ')
-			end
-		end
-		$turnNum += 1
-	end
+        end
+    end
+    $turnNum += 1
 end
 
 def hasWon
@@ -103,13 +93,11 @@ def hasWon
 	$winConditions.each do |i|
 		if i[0].returnState == ' X ' && i[1].returnState == ' X ' && i[2].returnState == ' X '
 			puts 'Player 1 wins!'
-            newLine; newLIne
-			exit
-		elsif i[0].returnState == ' O ' && i[1].returnState == ' O ' && i[2].returnState == ' O '
-			puts 'Player 2 wins!'
-            newLine; newLine
-			exit
-		end
+        elsif i[0].returnState == ' O ' && i[1].returnState == ' O ' && i[2].returnState == ' O '
+            puts 'Player 2 wins!'
+        end
+        newLine; newLine
+        exit
 	end
 
 end
