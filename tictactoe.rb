@@ -67,9 +67,6 @@ $firstRow = [a1, a2, a3]
 $secondRow = [b1, b2, b3]
 $thirdRow = [c1, c2, c3]
 
-$fourCorners = [a1, c1, a3, c3]
-$fourSides = [a2, b3, c2, b1]
-
 $winConditions = [[a1, a2, a3], [b1, b2, b3], [c1, c2, c3], [a1, b1, c1], [a2, b2, c2], [a3, b3, c3], [a1, b2, c3], [a3, b2, c1]]
 
 
@@ -106,69 +103,16 @@ def hasWon
 	$winConditions.each do |i|
 		if i[0].returnState == ' X ' && i[1].returnState == ' X ' && i[2].returnState == ' X '
 			puts 'Player 1 wins!'
-			newLine
-			newLine
+            newLine; newLIne
 			exit
 		elsif i[0].returnState == ' O ' && i[1].returnState == ' O ' && i[2].returnState == ' O '
 			puts 'Player 2 wins!'
-			newLine
-			newLine
+            newLine; newLine
 			exit
 		end
 	end
 
 end
-
-def aiMove
-	$board.each do |i|
-		#Step 1: If you have two in a row, take the third
-		if i[0].returnState == ' O ' && i[1].returnState == ' O '
-			i[2].changeState(' O ')
-			$turnNum += 1 
-		elsif i[1].returnState == ' O ' && i[2].returnState == ' O '
-			i[0].changeState(' O ')
-			$turnNum += 1 
-		elsif i[0].returnState == ' O ' && i[2].returnState == ' O '
-			i[1].changeState(' O ')
-			$turnNum += 1 
-		#Step 2: If your opponent has two in a row, block the third
-		elsif i[0].returnState == ' X ' && i[1].returnState == ' X '
-			i[2].changeState(' O ') 
-			$turnNum += 1 
-		elsif i[1].returnState == ' X ' && i[2].returnState == ' X '
-			i[0].changeState(' O ')
-			$turnNum += 1 
-		elsif i[0].returnState == ' X ' && i[2].returnState == ' X '
-			i[1].changeState(' O ')
-			$turnNum += 1 
-		
-		end
-	end
-	#Step 3: Check if center is occupied
-	if $secondRow[1].returnState == '---'
-		$secondRow[1].changeState(' O ')
-		$turnNum += 1 
-		return 0
-	end
-	#Step 4: Go in an empty corner
-	$fourCorners.each do |i|
-		if i.returnState == '---'
-			i.changeState(' O ')
-			$turnNum += 1 
-			return 0
-		end
-	end
-    #Step 5: Go in an empty side
-	$fourSides.each do |i|
-		if i.returnState == '---'
-			i.changeState(' O ')
-			$turnNum += 1 
-			return 0
-		end
-	end
-end
-
-
 
 newLine
 
