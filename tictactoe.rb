@@ -93,11 +93,11 @@ def hasWon
 	$winConditions.each do |i|
 		if i[0].returnState == ' X ' && i[1].returnState == ' X ' && i[2].returnState == ' X '
 			puts 'Player 1 wins!'
+			exit
         elsif i[0].returnState == ' O ' && i[1].returnState == ' O ' && i[2].returnState == ' O '
             puts 'Player 2 wins!'
+            exit
         end
-        newLine; newLine
-        exit
 	end
 
 end
