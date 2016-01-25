@@ -101,9 +101,54 @@ def hasWon
 	end
 
 end
-
-newLine
-
+def aiMove
+	#Step 1: Check if there are two in a row; if so, move to either win or block
+	$winConditions.each do |i|
+		if i[0].returnState == ' X ' && i[1].returnState == ' X ' || i[0].returnState == ' O ' && i[1].returnState == ' O '
+			i[2].changeState(' O ')
+			return 0
+		elsif i[1].returnState == ' X ' && i[2].returnState == ' X ' || i[1].returnState == ' O ' && i[2].returnState == ' O '
+			i[0].changeState(' O ')
+			return 0
+		elsif i[0].returnState == ' X ' && i[2].returnState == ' X ' || i[0].returnState == ' O ' && i[2].returnState == ' O '
+			i[1].changeState(' O ')
+			return 0
+		end
+	end
+	#Step 2: Go in the center if unoccupied
+	if $secondRow[1].returnState == '---'
+		$secondRow[1].changeState(' O ')
+		return 0
+	end
+	#Step 3: Go in an open corner
+	if $firstRow[0].returnState = '---'
+		$firstRow[0].changeState(' O ')
+		return 0
+	elsif $firstRow[2].returnState = '---'
+		$firstRow[2].changeState(' O ')
+		return 0
+	elsif $thirdRow[0].returnState = '---'
+		$thirdRow[0].changeState(' O ')
+		return 0
+	elsif $thirdRow[2].returnState = '---'
+		$thirdRow[2].changeState(' O ')
+		return 0
+	end
+	#Step 4: Go on an empty side
+	if $firstRow[1].returnState = '---'
+		$firstRow[0].changeState(' O ')
+		return 0
+	elsif $secondRow[0].returnState = '---'
+		$secondRow[0].changeState(' O ')
+		return 0
+	elsif $secondRow[2].returnState = '---'
+		$secondRow[2].changeState(' O ')
+		return 0
+	elsif $thirdRow[1].returnState = '---'
+		$thirdRow[1].changeState(' O ')
+		return 0
+	end
+end
 
 drawBoard
 
@@ -112,13 +157,16 @@ newLine
 newLine
 
 
-until $turnNum > 8
+until $turnNum > 5
     takeTurn
     newLine
     drawBoard
     hasWon
+    aiMove
+    drawBoard
+    hasWon
     newLine
-end until $turnNum > 8
+end until $turnNum > 5
 puts "It's a draw!"
 
 
